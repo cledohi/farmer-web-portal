@@ -1,0 +1,30 @@
+.wrapper {
+  height: 100vh;
+  background-color: #003262;
+}
+.login {
+  width: 450px;
+  height: min-content;
+  border-radius: 5px;
+  background-color: #4c4c4c;
+}
+.login .title {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: xx-large;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #fff;
+}
+.login .login-label {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: medium;
+  font-weight: bold;
+  display: flex;
+  color: #fff;
+}
+
+.login .btn-custom {
+  background-color: #020101;
+}
