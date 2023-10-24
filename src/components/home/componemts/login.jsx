@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 import "./login.css";
+import { useDispatch } from "react-redux";
+import { requestAuthentication } from "../../../redux/slice/userDetailSlice";
 function Login(props) {
+  const dispatch = useDispatch();
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
+  const goToSignUp = () => {
+    navigate("/register");
+  };
 
   const handelLogin = (event) => {
     const form = event.currentTarget;
@@ -13,6 +21,18 @@ function Login(props) {
       event.stopPropagation();
     }
     setValidated(true);
+    event.preventDefault();
+    const { elements } = form;
+    const {
+      username: { value: username },
+      password: { value: password },
+    } = elements;
+    const formData = {
+      username,
+      password,
+    };
+    console.log(formData);
+    dispatch(requestAuthentication(formData));
   };
   return (
     <div className="wrapper d-flex align-items-center justify-content-center w-100">
@@ -23,7 +43,7 @@ function Login(props) {
         className="login p-3 "
       >
         <h2 className="mb-3 title"> Login to Agro-Tech Store</h2>
-        <Form.Group controlId="firstName">
+        <Form.Group controlId="username">
           <Form.Label className="login-label">
             Username / Phone Number
           </Form.Label>
@@ -38,7 +58,7 @@ function Login(props) {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group controlId="lastName">
+        <Form.Group controlId="password">
           <Form.Label className="login-label">Password </Form.Label>
           <Form.Control required type="password" placeholder="Enter Password" />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -50,7 +70,11 @@ function Login(props) {
           <Button type="submit" className="btn btn-lg btn-primary">
             Sign in
           </Button>
-          <Button type="button" className="btn btn-lg btn-success">
+          <Button
+            type="button"
+            onClick={goToSignUp}
+            className="btn btn-lg btn-success"
+          >
             create Account
           </Button>
         </div>

@@ -2,18 +2,22 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 function Register(props) {
   const [validated, setValidated] = useState(false);
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
+      console.log(`data is :${JSON.stringify(form)}`);
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
+  };
+  const goToLogin = () => {
+    navigate("/");
   };
   return (
     <div className="wrapper d-flex align-items-center justify-content-center w-100">
@@ -89,8 +93,12 @@ function Register(props) {
           <Button type="submit" className="btn btn-lg btn-primary">
             Register
           </Button>
-          <Button type="button" className="btn btn-lg btn-success">
-            Login
+          <Button
+            type="button"
+            onClick={goToLogin}
+            className="btn btn-lg btn-success"
+          >
+            Login Here
           </Button>
         </div>
       </Form>
