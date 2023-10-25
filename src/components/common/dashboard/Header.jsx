@@ -7,15 +7,15 @@ import {
   BsJustify,
 } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import LogoutBtn from "../Logout";
 function Header({ OpenSidebar }) {
   const {
     loginUser: {
       data: {
-        token,
-        user: { names, username, userType },
+        user: { names, userType },
       },
     },
-  } = useSelector((state) => state.app.user);
+  } = useSelector((state) => state?.app?.user);
   return (
     <header className="header">
       <div className="menu-icon">
@@ -28,9 +28,7 @@ function Header({ OpenSidebar }) {
         Welcome <strong>{userType}</strong> {names}
       </div>
       <div className="header-right">
-        <BsFillBellFill className="icon" color="white" />
-        <BsFillEnvelopeFill className="icon" color="white" />
-        <BsPersonCircle className="icon" color="white" />
+        <LogoutBtn />
       </div>
     </header>
   );

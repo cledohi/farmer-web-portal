@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/AuthenticationService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const LogoutBtn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const LogoutBtn = () => {
   };
 
   return (
-    <button className="btn btn-lg btn-danger" onClick={handleLogout}>
+    <button className=" btn btn-sm btn-danger" onClick={handleLogout}>
       Logout
     </button>
   );

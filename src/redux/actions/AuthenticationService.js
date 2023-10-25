@@ -8,7 +8,7 @@ export const requestAuthoService = createAsyncThunk(
   "loginAction",
   async (data, { rejectWithValue }) => {
     const option = headerOptions({ data, method: "POST" });
-    console.log(option);
+
     const url = `${baseUrl}/authenticate`;
     const response = await fetch(url, option);
     try {
@@ -53,7 +53,10 @@ export const validateResponse = (state, action) => {
     if (status === 200) {
       state.loginUser = payload;
       state.success = true;
-      if (action.type === "createAccount/fulfilled") {
+      if (
+        action.type === "createAccount/fulfilled" ||
+        action.type === "calculateFertilizer/fulfilled"
+      ) {
         state.messageError = message;
       }
     } else {

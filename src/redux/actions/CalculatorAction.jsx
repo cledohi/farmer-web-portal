@@ -4,19 +4,29 @@ import { baseUrl } from "../../utils/baseUrl";
 
 export const calculateFertilizer = createAsyncThunk(
   "calculateFertilizer",
-  async (data, token, { rejectWithValue }) => {
-    const response = await fetch(
-      `${baseUrl}/orders/previewOrder`,
-      headerOptions(data, "POST", token)
-    );
+  async (data, { rejectWithValue, getState }) => {
+    const state = getState();
+    const {
+      app: {
+        user: {
+          loginUser: {
+            data: { token },
+          },
+        },
+      },
+    } = state;
+    const options = headerOptions({ data, method: "POST", token });
+
+    const response = await fetch(`${baseUrl}/orders/previewOrder`, options);
     try {
       const output = await response.json();
       return output;
     } catch (error) {
-      return rejectWithValue;
+      return rejectWithValue(error);
     }
   }
 );
+
 export const handelOrderFormData = (event, dispatch, setValidated) => {
   const form = event.currentTarget;
   if (form.checkValidity() === false) {

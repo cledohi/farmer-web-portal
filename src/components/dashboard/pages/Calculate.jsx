@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrum from "./components/breadcrum";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -9,12 +9,22 @@ import { autoCalculateFormInputs } from "../../../utils/utils";
 import Badge from "react-bootstrap/Badge";
 import "./cal.css";
 import { handelOrderFormData } from "../../../redux/actions/CalculatorAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../common/Loading";
+import MessageError from "../../common/Message";
+import { intiatePaegable } from "../../../utils/utils";
+import { allFertilizer } from "../../../redux/actions/fetchDataActions";
 function Calculate(props) {
+  const {
+    order: { error, loading, success, messageError: message, fertilizers },
+  } = useSelector((state) => state.app);
+  console.log(`fertilizer is:${JSON.stringify(fertilizers)}`);
   const datas = [
     { id: 1, name: "Nyamirambo" },
     { id: 2, name: "Nyamata" },
   ];
+  const pageable = intiatePaegable;
+
   const inputs = autoCalculateFormInputs;
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
@@ -22,12 +32,28 @@ function Calculate(props) {
   const previewOrder = (event) => {
     handelOrderFormData(event, dispatch, setValidated);
   };
+  // Defined the function to fetch fertilizers
+  const fetchFertilizers = () => {
+    dispatch(allFertilizer(pageable));
+  };
+
+  // useEffect to fetch fertilizers when the component mounts
+  useEffect(() => {
+    fetchFertilizers();
+  }, []);
+  /*
+  // another useEffect to re-fetch fertilizers when either 'fertilizers' or 'success' change
+  useEffect(() => {
+    if (fertilizers || success) {
+      fetchFertilizers();
+    }
+  }, [fertilizers, success]);*/
   return (
     <div className="container-fluid  main-cal">
       <BreadCrum title="Dashboard" subSubTitle="Calculate" />
-      <div class="card cal-main-card">
-        <div class="card-body">
-          <h5 class="card-title card-title-custom pb-2">
+      <div className="card cal-main-card">
+        <div className="card-body">
+          <h5 className="card-title card-title-custom pb-2">
             Calcurate Fertilizer
           </h5>
           <div className="row">
@@ -42,16 +68,32 @@ function Calculate(props) {
                     validated={validated}
                     onSubmit={previewOrder}
                   >
+                    {error ? (
+                      <MessageError
+                        message={
+                          message != null
+                            ? message
+                            : "System Error Or check Internet connection"
+                        }
+                        type={success ? "success" : "danger"}
+                      />
+                    ) : null}
                     {inputs.map((item, index) => (
                       <SelectInputOption
                         key={`${index}_${item}`}
                         label={item.input}
-                        values={datas}
+                        values={
+                          item.input === "Fertilizer" ? fertilizers : datas
+                        }
                       />
                     ))}
 
                     <Button type="submit" className="btn btn-secondary">
-                      Submit
+                      {loading ? (
+                        <Loading />
+                      ) : (
+                        <span>calculate Fertilizer</span>
+                      )}
                     </Button>
                   </Form>
                 </div>
@@ -64,7 +106,7 @@ function Calculate(props) {
                     All Requested Order
                   </div>
                   <div className=" table-responsive">
-                    <table class="table table-bordered table-hover">
+                    <table className="table table-bordered table-hover">
                       <thead>
                         <tr>
                           <th>Action</th>

@@ -1,4 +1,4 @@
-export const headerOptions = ({ data, method, token = null }) => {
+export const headerOptions = ({ data = null, method, token = null }) => {
   const headers = {
     "Content-Type": "application/json",
   };
@@ -8,11 +8,12 @@ export const headerOptions = ({ data, method, token = null }) => {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  return {
+  const requestBody = {
     method,
     headers,
-    body: JSON.stringify(data),
+    ...(data && { body: JSON.stringify(data) }),
   };
+  return requestBody;
 };
 
 export const autoCalculateFormInputs = [
@@ -20,3 +21,4 @@ export const autoCalculateFormInputs = [
   { id: 1, input: "Fertilizer" },
   { id: 2, input: "Seeds" },
 ];
+export const intiatePaegable = { page: 0, size: 40 };

@@ -20,7 +20,7 @@ function Login(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (success && token) {
+    if (success) {
       navigate("/dashboard");
     }
   }, [navigate, success, token]);
