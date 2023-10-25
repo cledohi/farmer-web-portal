@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import { useSelector, useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-function Register(props) {
+import MessageError from "../../common/Message";
+import Loading from "../../common/Loading";
+import { handelFormAccountCreation } from "../../../redux/actions/RegisterFarmerActionService";
+function RegisterUser(props) {
+  const {
+    user: { error, loading, success, messageError: message },
+  } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      console.log(`data is :${JSON.stringify(form)}`);
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
+    handelFormAccountCreation(event, dispatch, setValidated);
   };
   const goToLogin = () => {
     navigate("/");
@@ -28,6 +30,16 @@ function Register(props) {
         className="login p-3 "
       >
         <h2 className="mb-3 title"> Sign up to Agro-Tech Store</h2>
+        {error ? (
+          <MessageError
+            message={
+              message != null
+                ? message
+                : "System Error Or check Internet connection"
+            }
+            type={success ? "success" : "danger"}
+          />
+        ) : null}
         <Form.Group controlId="firstName">
           <Form.Label className="login-label">First name</Form.Label>
           <Form.Control required type="text" placeholder="Enter First name" />
@@ -83,7 +95,7 @@ function Register(props) {
         </Form.Group>
         <Form.Group controlId="address">
           <Form.Label className="login-label">Address</Form.Label>
-          <Form.Control type="password" placeholder="Enter address" required />
+          <Form.Control type="address" placeholder="Enter address" required />
           <Form.Control.Feedback type="valid">wawoo</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
             Address Required
@@ -91,7 +103,7 @@ function Register(props) {
         </Form.Group>
         <div className="d-flex justify-content-between mt-4">
           <Button type="submit" className="btn btn-lg btn-primary">
-            Register
+            {loading ? <Loading /> : <span>Sign Up</span>}
           </Button>
           <Button
             type="button"
@@ -106,4 +118,4 @@ function Register(props) {
   );
 }
 
-export default Register;
+export default RegisterUser;

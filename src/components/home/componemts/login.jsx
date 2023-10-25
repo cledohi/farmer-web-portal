@@ -5,57 +5,46 @@ import { useNavigate } from "react-router-dom";
 
 import "./login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { requestAuthentication } from "../../../redux/slice/userDetailSlice";
+import { handelLogin } from "../../../redux/actions/AuthenticationService";
+
 import Loading from "../../common/Loading";
 import MessageError from "../../common/Message";
 function Login(props) {
   const {
-    user: { error, loginUser, loading, success, loginRequest },
+    user: { error, loading, success, messageError: message },
   } = useSelector((state) => state.app);
-
+  const userState = useSelector((state) => state.app.user);
+  const token = userState?.loginUser?.data?.token;
   const dispatch = useDispatch();
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
-  const goToSignUp = () => {
-    navigate("/register");
-  };
+
   useEffect(() => {
-    if (success) {
+    if (success && token) {
       navigate("/dashboard");
     }
-  }, [success, error]);
-  const handelLogin = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
-    event.preventDefault();
-    const { elements } = form;
-    const {
-      username: { value: username },
-      password: { value: password },
-    } = elements;
-    const formData = {
-      username,
-      password,
-    };
-    console.log(formData);
-    dispatch(requestAuthentication(formData));
+  }, [navigate, success, token]);
+
+  const submitLogin = (event) => {
+    handelLogin(event, dispatch, setValidated);
+  };
+  const goToSignUp = () => {
+    navigate("/register");
   };
   return (
     <div className="wrapper d-flex align-items-center justify-content-center w-100">
       <Form
         noValidate
         validated={validated}
-        onSubmit={handelLogin}
+        onSubmit={submitLogin}
         className="login p-3 "
       >
         <h2 className="mb-3 title"> Login to Agro-Tech Store</h2>
         {error ? (
           <MessageError
-            message="Invalid Username/Phone or Password"
+            message={
+              message != null ? message : "Invalid Username/Phone or Password"
+            }
             type="danger"
           />
         ) : null}

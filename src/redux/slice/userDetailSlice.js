@@ -1,52 +1,52 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { headerOptions } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
-// Functions and exports
-
-// actions
-export const requestAuthentication = createAsyncThunk(
-  "loginAction",
-  async (data, { rejectWithValue }) => {
-    const option = headerOptions({ data, method: "POST" });
-    console.log(option);
-    const url = `http://localhost:8182/authenticate`;
-    const response = await fetch(url, option);
-    try {
-      const results = await response.json();
-      return results;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  requestAuthoService,
+  validateResponse,
+} from "../actions/AuthenticationService";
+import { createFarmerAccount } from "../actions/RegisterFarmerActionService";
+const userInitalState = {
+  users: [],
+  loading: false,
+  error: false,
+  messageError: null,
+  loginRequest: {},
+  loginUser: {},
+  success: false,
+};
 
 export const userDetails = createSlice({
   name: "userDetail",
-  initialState: {
-    users: [],
-    loading: false,
-    error: false,
-    messageError: null,
-    loginRequest: {},
-    loginUser: {},
-    success: false,
-  },
+  initialState: userInitalState,
   extraReducers: {
-    [requestAuthentication.pending]: (state) => {
+    [requestAuthoService.pending]: (state) => {
       state.loading = true;
     },
-    [requestAuthentication.fulfilled]: (state, action) => {
+    [requestAuthoService.fulfilled]: (state, action) => {
       state.loading = false;
-      state.loginUser = action.payload;
-      state.success = true;
+      validateResponse(state, action);
     },
-    [requestAuthentication.rejected]: (state, action) => {
+    [requestAuthoService.rejected]: (state) => {
       state.loading = false;
-      state.messageError = action.payload;
       state.error = true;
+      state.messageError = null;
+      state.success = false;
+    },
+    // account creation handle
+    [createFarmerAccount.pending]: (state) => {
+      state.loading = true;
+    },
+    [createFarmerAccount.fulfilled]: (state, action) => {
+      state.loading = false;
+      validateResponse(state, action);
+    },
+    [createFarmerAccount.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.messageError = action?.error?.message;
       state.success = false;
     },
   },
 });
 
+export { userInitalState };
 export default userDetails.reducer;

@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to local storage for web
 
 import rootReducer from "../redux/rootReducer";
-import reduxLogger from "../redux/logger/looger";
+import { reduxLogger } from "../redux/logger/looger";
 
 const persistConfig = {
   key: "root",

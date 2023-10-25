@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.page-not-found {
+  background-color: #003262;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: white;
+}
