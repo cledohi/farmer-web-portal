@@ -14,3 +14,9 @@ export const headerOptions = ({ data, method, token = null }) => {
     body: JSON.stringify(data),
   };
 };
+
+export const autoCalculateFormInputs = [
+  { id: 0, input: "Land" },
+  { id: 1, input: "Fertilizer" },
+  { id: 2, input: "Seeds" },
+];
