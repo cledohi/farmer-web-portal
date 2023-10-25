@@ -18,6 +18,7 @@ import {
   allLands,
   allSeeds,
 } from "../../../redux/actions/fetchDataActions";
+import CalculatorResult from "./components/CalculatorResult";
 function Calculate(props) {
   const {
     user: {
@@ -30,6 +31,7 @@ function Calculate(props) {
     order: {
       error,
       loading,
+      isCal,
       success,
       messageError: message,
       fertilizers,
@@ -38,6 +40,7 @@ function Calculate(props) {
     },
   } = useSelector((state) => state.app);
   const pageable = intiatePaegable;
+  const [showCalResult, setShowCalResult] = useState(false);
   const inputs = autoCalculateFormInputs;
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
@@ -67,50 +70,54 @@ function Calculate(props) {
           </h5>
           <div className="row">
             <div className="col-md-3 col-lg-3 col-sm-12">
-              <div className="card">
-                <div className="card-body">
-                  <div className="card-title card-title-custom-sm ">
-                    Calculator
-                  </div>
-                  <Form
-                    noValidate
-                    validated={validated}
-                    onSubmit={previewOrder}
-                  >
-                    {error ? (
-                      <MessageError
-                        message={
-                          message != null
-                            ? message
-                            : "System Error Or check Internet connection"
-                        }
-                        type={success ? "success" : "danger"}
-                      />
-                    ) : null}
-                    {inputs.map((item, index) => (
-                      <SelectInputOption
-                        key={`${index}_${item}`}
-                        label={item.input}
-                        values={
-                          item.input === "Fertilizer"
-                            ? fertilizers
-                            : item.input === "Seeds"
-                            ? seeds
-                            : lands
-                        }
-                      />
-                    ))}
+              {isCal ? (
+                <CalculatorResult />
+              ) : (
+                <div className="card">
+                  <div className="card-body">
+                    <div className="card-title card-title-custom-sm ">
+                      Calculator
+                    </div>
+                    <Form
+                      noValidate
+                      validated={validated}
+                      onSubmit={previewOrder}
+                    >
+                      {error ? (
+                        <MessageError
+                          message={
+                            message != null
+                              ? message
+                              : "System Error Or check Internet connection"
+                          }
+                          type={success ? "success" : "danger"}
+                        />
+                      ) : null}
+                      {inputs.map((item, index) => (
+                        <SelectInputOption
+                          key={`${index}_${item}`}
+                          label={item.input}
+                          values={
+                            item.input === "Fertilizer"
+                              ? fertilizers
+                              : item.input === "Seeds"
+                              ? seeds
+                              : lands
+                          }
+                        />
+                      ))}
 
-                    <Button type="submit" className="btn btn-secondary">
-                      {loading ? (
-                        <Loading />
-                      ) : (
-                        <span>calculate Fertilizer</span>
-                      )}
-                    </Button>
-                  </Form>
+                      <Button type="submit" className="btn btn-secondary">
+                        {loading ? (
+                          <Loading />
+                        ) : (
+                          <span>calculate Fertilizer</span>
+                        )}
+                      </Button>
+                    </Form>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="col-md-9 col-lg-9 col-sm-12">
               <div className="card">

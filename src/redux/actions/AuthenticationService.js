@@ -49,25 +49,33 @@ export const logout = () => {
 export const validateResponse = (state, action) => {
   const payload = action?.payload;
   if (payload) {
-    const { status, message } = payload;
+    const { status, message, data } = payload;
     if (status === 200) {
       state.loginUser = payload;
       state.success = true;
       state.error = false;
-      if (
-        action.type === "createAccount/fulfilled" ||
-        action.type === "calculateFertilizer/fulfilled"
-      ) {
-        state.messageError = message;
+      switch (action.type) {
+        case "calculateFertilizer/fulfilled":
+          state.messageError = null;
+          state.calculator = data;
+          state.isCal = true;
+          break;
+        case "createAccount/fulfilled":
+          state.messageError = message;
+          break;
+        default:
+          break;
       }
     } else {
       state.error = true;
       state.messageError = message;
       state.success = false;
+      state.isCal = false;
     }
   } else {
     state.error = true;
     state.messageError = null;
     state.success = false;
+    state.isCal = false;
   }
 };

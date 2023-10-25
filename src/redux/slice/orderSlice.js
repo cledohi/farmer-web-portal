@@ -15,6 +15,7 @@ const orderInitalState = {
   messageError: null,
   user: {},
   calculator: {},
+  isCal: false,
   seeds: [],
   lands: [],
   fertilizers: [],
@@ -35,6 +36,7 @@ export const orderDetails = createSlice({
       state.error = true;
       state.messageError = action?.error?.message;
       state.success = false;
+      state.isCal = false;
     },
     // allFertilizer
     [allFertilizer.pending]: (state) => {
