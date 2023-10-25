@@ -13,18 +13,31 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../common/Loading";
 import MessageError from "../../common/Message";
 import { intiatePaegable } from "../../../utils/utils";
-import { allFertilizer } from "../../../redux/actions/fetchDataActions";
+import {
+  allFertilizer,
+  allLands,
+  allSeeds,
+} from "../../../redux/actions/fetchDataActions";
 function Calculate(props) {
   const {
-    order: { error, loading, success, messageError: message, fertilizers },
+    user: {
+      loginUser: {
+        data: {
+          user: { username },
+        },
+      },
+    },
+    order: {
+      error,
+      loading,
+      success,
+      messageError: message,
+      fertilizers,
+      seeds,
+      lands,
+    },
   } = useSelector((state) => state.app);
-  console.log(`fertilizer is:${JSON.stringify(fertilizers)}`);
-  const datas = [
-    { id: 1, name: "Nyamirambo" },
-    { id: 2, name: "Nyamata" },
-  ];
   const pageable = intiatePaegable;
-
   const inputs = autoCalculateFormInputs;
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
@@ -35,19 +48,15 @@ function Calculate(props) {
   // Defined the function to fetch fertilizers
   const fetchFertilizers = () => {
     dispatch(allFertilizer(pageable));
+    dispatch(allSeeds(pageable));
+    dispatch(allLands({ username }));
   };
 
   // useEffect to fetch fertilizers when the component mounts
   useEffect(() => {
     fetchFertilizers();
   }, []);
-  /*
-  // another useEffect to re-fetch fertilizers when either 'fertilizers' or 'success' change
-  useEffect(() => {
-    if (fertilizers || success) {
-      fetchFertilizers();
-    }
-  }, [fertilizers, success]);*/
+
   return (
     <div className="container-fluid  main-cal">
       <BreadCrum title="Dashboard" subSubTitle="Calculate" />
@@ -83,7 +92,11 @@ function Calculate(props) {
                         key={`${index}_${item}`}
                         label={item.input}
                         values={
-                          item.input === "Fertilizer" ? fertilizers : datas
+                          item.input === "Fertilizer"
+                            ? fertilizers
+                            : item.input === "Seeds"
+                            ? seeds
+                            : lands
                         }
                       />
                     ))}

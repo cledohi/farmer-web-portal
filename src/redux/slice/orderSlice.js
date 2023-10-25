@@ -3,6 +3,8 @@ import { calculateFertilizer } from "../actions/CalculatorAction";
 import { validateResponse } from "../actions/AuthenticationService";
 import {
   allFertilizer,
+  allLands,
+  allSeeds,
   validateFetchResponse,
 } from "../actions/fetchDataActions";
 const orderInitalState = {
@@ -14,7 +16,7 @@ const orderInitalState = {
   user: {},
   calculator: {},
   seeds: [],
-  Lands: [],
+  lands: [],
   fertilizers: [],
 };
 export const orderDetails = createSlice({
@@ -47,6 +49,35 @@ export const orderDetails = createSlice({
       state.error = true;
       state.messageError = action?.error?.message;
       state.success = false;
+    },
+    //allSeeds
+    [allSeeds.pending]: (state) => {
+      state.loading = true;
+    },
+    [allSeeds.fulfilled]: (state, action) => {
+      state.loading = false;
+      validateFetchResponse(state, action);
+    },
+    [allSeeds.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.messageError = action?.error?.message;
+      state.success = false;
+    },
+    // allLands
+    [allLands.pending]: (state) => {
+      state.loading = true;
+    },
+    [allLands.fulfilled]: (state, action) => {
+      state.loading = false;
+      validateFetchResponse(state, action);
+    },
+    [allLands.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = false;
+      state.messageError = null;
+      state.success = false;
+      console.log(action?.error?.message);
     },
   },
 });

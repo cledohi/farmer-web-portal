@@ -53,6 +53,7 @@ export const validateResponse = (state, action) => {
     if (status === 200) {
       state.loginUser = payload;
       state.success = true;
+      state.error = false;
       if (
         action.type === "createAccount/fulfilled" ||
         action.type === "calculateFertilizer/fulfilled"
