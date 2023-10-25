@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { headerOptions } from "../../utils/utils";
-
+import { useNavigate } from "react-router-dom";
 // Functions and exports
 
 // actions
@@ -25,25 +25,26 @@ export const userDetails = createSlice({
   initialState: {
     users: [],
     loading: false,
-    error: null,
+    error: false,
+    messageError: null,
     loginRequest: {},
     loginUser: {},
+    success: false,
   },
   extraReducers: {
     [requestAuthentication.pending]: (state) => {
       state.loading = true;
     },
     [requestAuthentication.fulfilled]: (state, action) => {
-      console.log(JSON.stringify(action));
       state.loading = false;
       state.loginUser = action.payload;
+      state.success = true;
     },
     [requestAuthentication.rejected]: (state, action) => {
-      console.log(JSON.stringify(action));
-
       state.loading = false;
-      state.loginUser = action.payload;
-      state.error = action.payload;
+      state.messageError = action.payload;
+      state.error = true;
+      state.success = false;
     },
   },
 });

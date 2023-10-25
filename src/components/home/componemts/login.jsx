@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 
 import "./login.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { requestAuthentication } from "../../../redux/slice/userDetailSlice";
+import Loading from "../../common/Loading";
+import MessageError from "../../common/Message";
 function Login(props) {
+  const {
+    user: { error, loginUser, loading, success, loginRequest },
+  } = useSelector((state) => state.app);
+
   const dispatch = useDispatch();
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
   const goToSignUp = () => {
     navigate("/register");
   };
-
+  useEffect(() => {
+    if (success) {
+      navigate("/dashboard");
+    }
+  }, [success, error]);
   const handelLogin = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -43,6 +53,12 @@ function Login(props) {
         className="login p-3 "
       >
         <h2 className="mb-3 title"> Login to Agro-Tech Store</h2>
+        {error ? (
+          <MessageError
+            message="Invalid Username/Phone or Password"
+            type="danger"
+          />
+        ) : null}
         <Form.Group controlId="username">
           <Form.Label className="login-label">
             Username / Phone Number
@@ -67,8 +83,12 @@ function Login(props) {
           </Form.Control.Feedback>
         </Form.Group>
         <div className="d-flex justify-content-between mt-4">
-          <Button type="submit" className="btn btn-lg btn-primary">
-            Sign in
+          <Button
+            type="submit"
+            className="btn btn-lg btn-primary"
+            disabled={loading}
+          >
+            {loading ? <Loading /> : <span>Sign In</span>}
           </Button>
           <Button
             type="button"
