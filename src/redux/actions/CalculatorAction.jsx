@@ -1,6 +1,10 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { headerOptions } from "../../utils/utils";
 import { baseUrl } from "../../utils/baseUrl";
+
+export const setIsCal = createAction("orderDetail/setIsCal");
+
+export const setOrderRequest = createAction("orderDetail/setOrderRequest");
 
 export const calculateFertilizer = createAsyncThunk(
   "calculateFertilizer",
@@ -46,5 +50,6 @@ export const handelOrderFormData = (event, dispatch, setValidated) => {
     seedId: Seeds,
     fertilizerId: Fertilizer,
   };
+  dispatch(setOrderRequest(formData));
   dispatch(calculateFertilizer(formData));
 };

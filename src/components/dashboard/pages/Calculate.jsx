@@ -40,7 +40,6 @@ function Calculate(props) {
     },
   } = useSelector((state) => state.app);
   const pageable = intiatePaegable;
-  const [showCalResult, setShowCalResult] = useState(false);
   const inputs = autoCalculateFormInputs;
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();

@@ -1,12 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { calculateFertilizer } from "../actions/CalculatorAction";
 import { validateResponse } from "../actions/AuthenticationService";
+
+import {
+  calculateFertilizer,
+  setIsCal,
+  setOrderRequest,
+} from "../actions/CalculatorAction";
+
 import {
   allFertilizer,
   allLands,
   allSeeds,
   validateFetchResponse,
 } from "../actions/fetchDataActions";
+
 const orderInitalState = {
   orders: [],
   loading: false,
@@ -15,11 +22,13 @@ const orderInitalState = {
   messageError: null,
   user: {},
   calculator: {},
+  orderRequest: {},
   isCal: false,
   seeds: [],
   lands: [],
   fertilizers: [],
 };
+
 export const orderDetails = createSlice({
   name: "orderDetail",
   initialState: orderInitalState,
@@ -80,6 +89,14 @@ export const orderDetails = createSlice({
       state.messageError = null;
       state.success = false;
       console.log(action?.error?.message);
+    },
+    // handle iscal
+    [setIsCal]: (state, action) => {
+      state.isCal = action.payload;
+    },
+    //set order request data
+    [setOrderRequest]: (state, action) => {
+      state.orderRequest = action.payload;
     },
   },
 });

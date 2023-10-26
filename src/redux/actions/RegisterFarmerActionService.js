@@ -7,7 +7,6 @@ export const createFarmerAccount = createAsyncThunk(
   "createAccount",
   async (data, { rejectWithValue }) => {
     const option = headerOptions({ data, method: "POST" });
-    console.log(option);
     const url = `${baseUrl}/addFarmer`;
     const response = await fetch(url, option);
     try {
