@@ -5,6 +5,7 @@ import {
   calculateFertilizer,
   setIsCal,
   setOrderRequest,
+  submitFertilizerOrder,
 } from "../actions/CalculatorAction";
 
 import {
@@ -20,6 +21,7 @@ const orderInitalState = {
   error: null,
   order: {},
   messageError: null,
+  success: false,
   user: {},
   calculator: {},
   orderRequest: {},
@@ -46,6 +48,21 @@ export const orderDetails = createSlice({
       state.messageError = action?.error?.message;
       state.success = false;
       state.isCal = false;
+    },
+    [submitFertilizerOrder.pending]: (state) => {
+      state.loading = true;
+    },
+    // submitFertilizerOrder
+    [submitFertilizerOrder.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.messageError = action?.error?.message;
+      state.success = false;
+      state.isCal = false;
+    },
+    [submitFertilizerOrder.fulfilled]: (state, action) => {
+      state.loading = false;
+      validateResponse(state, action);
     },
     // allFertilizer
     [allFertilizer.pending]: (state) => {

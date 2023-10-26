@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  BsFillBellFill,
-  BsFillEnvelopeFill,
-  BsPersonCircle,
-  BsSearch,
-  BsJustify,
-} from "react-icons/bs";
+import { BsSearch, BsJustify } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import LogoutBtn from "../Logout";
 function Header({ OpenSidebar }) {

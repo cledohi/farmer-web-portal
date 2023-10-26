@@ -63,6 +63,12 @@ export const validateResponse = (state, action) => {
         case "createAccount/fulfilled":
           state.messageError = message;
           break;
+        case "submitOrder/fulfilled":
+          state.messageError = null;
+          state.calculator = null;
+          state.isCal = false;
+          state.messageError = message;
+          break;
         default:
           break;
       }

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import BreadCrum from "./components/breadcrum";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { MdContentCut } from "react-icons/md";
+
 import SelectInputOption from "../../common/SelectInputOption";
-import { autoCalculateFormInputs } from "../../../utils/utils";
-import Badge from "react-bootstrap/Badge";
+import { autoCalculateFormInputs, orderColumns } from "../../../utils/utils";
+
 import "./cal.css";
 import { handelOrderFormData } from "../../../redux/actions/CalculatorAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +18,9 @@ import {
   allSeeds,
 } from "../../../redux/actions/fetchDataActions";
 import CalculatorResult from "./components/CalculatorResult";
+import { getAllOrderByUserName } from "../../../redux/actions/dataTableAction";
+import DataTableCustom from "./components/dataTable";
+
 function Calculate(props) {
   const {
     user: {
@@ -38,7 +40,15 @@ function Calculate(props) {
       seeds,
       lands,
     },
+    dataTable: { filteredData, size, page },
   } = useSelector((state) => state.app);
+
+  const fetchAllOrdersByUsername = () => {
+    dispatch(getAllOrderByUserName({ size, page }));
+  };
+  useEffect(() => {
+    fetchAllOrdersByUsername();
+  }, []);
   const pageable = intiatePaegable;
   const inputs = autoCalculateFormInputs;
   const [validated, setValidated] = useState(false);
@@ -82,7 +92,7 @@ function Calculate(props) {
                       validated={validated}
                       onSubmit={previewOrder}
                     >
-                      {error ? (
+                      {error || success ? (
                         <MessageError
                           message={
                             message != null
@@ -119,52 +129,10 @@ function Calculate(props) {
               )}
             </div>
             <div className="col-md-9 col-lg-9 col-sm-12">
-              <div className="card">
-                <div className="card-body">
-                  <div className="card-title card-title-custom-sm ">
-                    All Requested Order
-                  </div>
-                  <div className=" table-responsive">
-                    <table className="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th>Action</th>
-                          <th>Status</th>
-                          <th>C.Names</th>
-                          <th>Phone.No</th>
-                          <th>Area</th>
-                          <th>Fertilizer.Q</th>
-                          <th>Seed.Q</th>
-                          <th>Seed.P</th>
-                          <th>Fertilizer.P</th>
-                          <th>Total.P</th>
-                          <th>Total.Q</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="d-flex flex-row gap-2">
-                            <BsFillCheckSquareFill size={35} color="green" />
-                            <MdContentCut size={35} color="red" />
-                          </td>
-                          <td>
-                            <Badge bg="danger"> Pending..</Badge>
-                          </td>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+              <DataTableCustom
+                data={filteredData}
+                columns={orderColumns(dispatch, false)}
+              />
             </div>
           </div>
         </div>

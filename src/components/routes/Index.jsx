@@ -12,12 +12,12 @@ import Calculate from "../dashboard/pages/Calculate";
 import UserManagement from "../dashboard/pages/UserManagement";
 import Seeds from "../dashboard/pages/Seeds";
 import Fertilizer from "../dashboard/pages/Fertilizer";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const FarmerRoutes = () => {
-  // const userState = useSelector((state) => state.app.user);
-  // const token = userState?.loginUser?.data?.token;
-
+  const userState = useSelector((state) => state.app.user);
+  const usertype = userState?.loginUser?.data?.user?.userType;
+  const isAdmin = usertype === "ADMIN" ? true : false;
   return useRoutes([
     {
       path: "/",
@@ -31,7 +31,9 @@ const FarmerRoutes = () => {
       path: "/dashBoard",
       element: <Dashboard />,
       children: [
-        { index: true, element: <HomeDashboard /> },
+        isAdmin
+          ? { index: true, element: <HomeDashboard /> }
+          : { index: true, element: <Calculate /> },
         { path: "clients", element: <Clients /> },
         { path: "orders", element: <Orders /> },
         { path: "calculate", element: <Calculate /> },
