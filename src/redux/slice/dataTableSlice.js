@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllOrders, updatePageable } from "../actions/dataTableAction";
+import {
+  getAllOrders,
+  handelDatTableResults,
+  updatePageable,
+} from "../actions/dataTableAction";
 
 const initalDataState = {
   loading: false,
