@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { headerOptions } from "../../utils/utils";
 import { baseUrl } from "../../utils/baseUrl";
+import { getAllOrderByUserName } from "./dataTableAction";
 
 export const setIsCal = createAction("orderDetail/setIsCal");
 
@@ -32,13 +33,16 @@ export const calculateFertilizer = createAsyncThunk(
 );
 export const submitFertilizerOrder = createAsyncThunk(
   "submitOrder",
-  async (data, { rejectWithValue, getState }) => {
+  async (data, { rejectWithValue, getState, dispatch }) => {
     const state = getState();
     const {
       app: {
         user: {
           loginUser: {
-            data: { token },
+            data: {
+              token,
+              user: { username },
+            },
           },
         },
       },
@@ -48,6 +52,7 @@ export const submitFertilizerOrder = createAsyncThunk(
     const response = await fetch(`${baseUrl}/orders/sendOrder`, options);
     try {
       const output = await response.json();
+      dispatch(getAllOrderByUserName({}));
       return output;
     } catch (error) {
       return rejectWithValue(error);
