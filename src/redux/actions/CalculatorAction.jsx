@@ -39,10 +39,7 @@ export const submitFertilizerOrder = createAsyncThunk(
       app: {
         user: {
           loginUser: {
-            data: {
-              token,
-              user: { username },
-            },
+            data: { token },
           },
         },
       },

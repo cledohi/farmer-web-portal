@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import BreadCrum from "./components/breadcrum";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { MdContentCut } from "react-icons/md";
+
 import SelectInputOption from "../../common/SelectInputOption";
 import { autoCalculateFormInputs, orderColumns } from "../../../utils/utils";
-import Badge from "react-bootstrap/Badge";
+
 import "./cal.css";
 import { handelOrderFormData } from "../../../redux/actions/CalculatorAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,16 +40,7 @@ function Calculate(props) {
       seeds,
       lands,
     },
-    dataTable: {
-      loading: loadinTb,
-      error: errorTb,
-      data,
-      filteredData,
-      messageError,
-      success: successTb,
-      size,
-      page,
-    },
+    dataTable: { filteredData, size, page },
   } = useSelector((state) => state.app);
 
   const fetchAllOrdersByUsername = () => {

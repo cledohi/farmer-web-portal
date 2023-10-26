@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/AuthenticationService";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const LogoutBtn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

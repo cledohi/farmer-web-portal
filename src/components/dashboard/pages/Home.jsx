@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import BreadCrum from "./components/breadcrum";
-import Button from "react-bootstrap/Button";
+
 import { useSelector, useDispatch } from "react-redux";
-import Badge from "react-bootstrap/Badge";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { MdContentCut } from "react-icons/md";
+
 import { getAllOrders } from "../../../redux/actions/dataTableAction";
 import DataTableCustom from "./components/dataTable";
 import { orderColumns } from "../../../utils/utils";
 function HomeDashboard(props) {
   const {
     dataTable: {
-      loading,
-      error,
-      data,
       filteredData,
-      messageError,
-      success,
+
       size,
       page,
     },
