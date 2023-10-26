@@ -2,7 +2,9 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { userDetails } from "./slice/userDetailSlice";
 import { orderDetails } from "./slice/orderSlice";
 import { persistReducer } from "redux-persist";
+
 import storage from "redux-persist/lib/storage";
+import { dataTableInformation } from "./slice/dataTableSlice";
 const persistConfig = {
   key: "root",
   storage,
@@ -10,6 +12,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userDetails.reducer,
   order: orderDetails.reducer,
+  dataTable: dataTableInformation.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -19,6 +19,7 @@ import {
   allSeeds,
 } from "../../../redux/actions/fetchDataActions";
 import CalculatorResult from "./components/CalculatorResult";
+
 function Calculate(props) {
   const {
     user: {
@@ -82,7 +83,7 @@ function Calculate(props) {
                       validated={validated}
                       onSubmit={previewOrder}
                     >
-                      {error ? (
+                      {error || success ? (
                         <MessageError
                           message={
                             message != null

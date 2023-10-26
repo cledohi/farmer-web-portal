@@ -30,6 +30,30 @@ export const calculateFertilizer = createAsyncThunk(
     }
   }
 );
+export const submitFertilizerOrder = createAsyncThunk(
+  "submitOrder",
+  async (data, { rejectWithValue, getState }) => {
+    const state = getState();
+    const {
+      app: {
+        user: {
+          loginUser: {
+            data: { token },
+          },
+        },
+      },
+    } = state;
+    const options = headerOptions({ data, method: "POST", token });
+
+    const response = await fetch(`${baseUrl}/orders/sendOrder`, options);
+    try {
+      const output = await response.json();
+      return output;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const handelOrderFormData = (event, dispatch, setValidated) => {
   const form = event.currentTarget;
