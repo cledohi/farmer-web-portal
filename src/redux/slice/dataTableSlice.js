@@ -15,7 +15,7 @@ const initalDataState = {
   filteredData: [],
   messageError: null,
   success: false,
-  size: 5,
+  size: 10,
   page: 0,
 };
 

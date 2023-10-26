@@ -52,6 +52,10 @@ export const orderColumns = (dispatch, isAdmin) => {
         </div>
       ),
     },
+    {
+      name: "Client Phone",
+      selector: (row) => row.orderUsername,
+    },
 
     {
       name: "Payment Status",
