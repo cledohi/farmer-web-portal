@@ -1,0 +1,21 @@
+.card-title-custom {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
+  font-size: x-large;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.card-title-custom-sm {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
+  font-size: large;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.list_Item_text {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
+  font-size: medium;
+  text-transform: capitalize;
+  font-weight: bold;
+}
