@@ -30,7 +30,7 @@ function RegisterUser(props) {
         className="login p-3 "
       >
         <h2 className="mb-3 title"> Sign up to Agro-Tech Store</h2>
-        {error ? (
+        {error || success ? (
           <MessageError
             message={
               message != null

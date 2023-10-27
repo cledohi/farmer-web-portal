@@ -6,13 +6,13 @@ import RegisterUser from "../home/componemts/RegisterUser";
 import Dashboard from "../dashboard/dashboard";
 import NotFound from "../notFount";
 import HomeDashboard from "../dashboard/pages/Home";
-import Clients from "../dashboard/pages/Clients";
 import Orders from "../dashboard/pages/Orders";
 import Calculate from "../dashboard/pages/Calculate";
 import UserManagement from "../dashboard/pages/UserManagement";
 import Seeds from "../dashboard/pages/Seeds";
 import Fertilizer from "../dashboard/pages/Fertilizer";
 import { useSelector } from "react-redux";
+import Lands from "../dashboard/pages/Lands";
 
 const FarmerRoutes = () => {
   const userState = useSelector((state) => state.app.user);
@@ -34,7 +34,7 @@ const FarmerRoutes = () => {
         isAdmin
           ? { index: true, element: <HomeDashboard /> }
           : { index: true, element: <Calculate /> },
-        { path: "clients", element: <Clients /> },
+        { path: "lands", element: <Lands /> },
         { path: "orders", element: <Orders /> },
         { path: "calculate", element: <Calculate /> },
         { path: "user", element: <UserManagement /> },

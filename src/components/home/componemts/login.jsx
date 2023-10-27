@@ -11,7 +11,7 @@ import Loading from "../../common/Loading";
 import MessageError from "../../common/Message";
 function Login(props) {
   const {
-    user: { error, loading, success, messageError: message },
+    user: { error, loading, isToken, success, messageError: message },
   } = useSelector((state) => state.app);
   const userState = useSelector((state) => state.app.user);
   const token = userState?.loginUser?.data?.token;
@@ -20,10 +20,10 @@ function Login(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (success) {
+    if (success && isToken) {
       navigate("/dashboard");
     }
-  }, [navigate, success, token]);
+  }, [navigate, success, token, isToken]);
 
   const submitLogin = (event) => {
     handelLogin(event, dispatch, setValidated);

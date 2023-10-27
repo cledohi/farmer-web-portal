@@ -50,11 +50,16 @@ export const validateResponse = (state, action) => {
   const payload = action?.payload;
   if (payload) {
     const { status, message, data } = payload;
+    console.log(`${status}, ${message},${data}`);
     if (status === 200) {
-      state.loginUser = payload;
       state.success = true;
       state.error = false;
       switch (action.type) {
+        case "loginAction/fulfilled":
+          state.loginUser = payload;
+          state.messageError = null;
+          state.isToken = true;
+          break;
         case "calculateFertilizer/fulfilled":
           state.messageError = null;
           state.calculator = data;
@@ -62,11 +67,14 @@ export const validateResponse = (state, action) => {
           break;
         case "createAccount/fulfilled":
           state.messageError = message;
+          state.isToken = false;
           break;
         case "submitOrder/fulfilled":
-          state.messageError = null;
           state.calculator = null;
           state.isCal = false;
+          state.messageError = message;
+          break;
+        case "assignLand/fulfilled":
           state.messageError = message;
           break;
         default:

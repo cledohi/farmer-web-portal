@@ -61,11 +61,18 @@ function SideBar({ openSidebarToggle, OpenSidebar }) {
         ) : null}
 
         {userType === "FARMER" || userType === "ADMIN" ? (
-          <li className="sidebar-list-item">
-            <Link to="/dashboard/calculate">
-              <BsFillArchiveFill className="icon" /> Calculate Fertilizer
-            </Link>
-          </li>
+          <>
+            <li className="sidebar-list-item">
+              <Link to="/dashboard/calculate">
+                <BsFillArchiveFill className="icon" /> Calculate Fertilizer
+              </Link>
+            </li>
+            <li className="sidebar-list-item">
+              <Link to="/dashboard/lands">
+                <BsFillArchiveFill className="icon" /> Add Land Info
+              </Link>
+            </li>
+          </>
         ) : null}
       </ul>
     </aside>
