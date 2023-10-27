@@ -8,6 +8,7 @@ const userInitalState = {
   users: [],
   loading: false,
   error: false,
+  isToken: false,
   messageError: null,
   loginRequest: {},
   loginUser: {},
@@ -39,7 +40,24 @@ export const userDetails = createSlice({
       state.loading = false;
       validateResponse(state, action);
     },
+
     [createFarmerAccount.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.messageError = action?.error?.message;
+      state.success = false;
+    },
+    // assign land to a farmer  assignLandToFarmer
+
+    [assignLandToFarmer.pending]: (state) => {
+      state.loading = true;
+    },
+    [assignLandToFarmer.fulfilled]: (state, action) => {
+      state.loading = false;
+      validateResponse(state, action);
+    },
+
+    [assignLandToFarmer.rejected]: (state, action) => {
       state.loading = false;
       state.error = true;
       state.messageError = action?.error?.message;

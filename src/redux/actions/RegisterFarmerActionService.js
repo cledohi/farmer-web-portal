@@ -19,9 +19,19 @@ export const createFarmerAccount = createAsyncThunk(
 );
 export const assignLandToFarmer = createAsyncThunk(
   "assignLand",
-  async (data, { rejectWithValue }) => {
+  async (data, { rejectWithValue, getState }) => {
+    const state = getState();
+    const {
+      app: {
+        user: {
+          loginUser: {
+            data: { token },
+          },
+        },
+      },
+    } = state;
     const url = `${baseUrl}/farmer/assignLand`;
-    const option = headerOptions({ data, method: "POST" });
+    const option = headerOptions({ data, method: "POST", token });
     const response = await fetch(url, option);
     try {
       const output = await response.json();

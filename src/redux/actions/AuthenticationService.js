@@ -69,8 +69,7 @@ export const validateResponse = (state, action) => {
           state.messageError = message;
           state.isToken = false;
           break;
-        case "submitOrder/fulfilled":
-          state.messageError = null;
+        case "submitOrder/fulfilled" || "assignLand/fulfilled":
           state.calculator = null;
           state.isCal = false;
           state.messageError = message;
