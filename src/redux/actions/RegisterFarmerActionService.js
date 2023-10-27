@@ -41,26 +41,33 @@ export const assignLandToFarmer = createAsyncThunk(
     }
   }
 );
-export const handelLandAssignForm = (event, setValidated, dispatch) => {
+export const handelLandAssignForm = (
+  event,
+  setValidated,
+  dispatch,
+  username
+) => {
   const form = event.currentTarget;
+  console.log(form);
   if (form.checkValidity() === false) {
     event.preventDefault();
     event.stopPropagation();
-    setValidated(true);
-    event.preventDefault();
-    const { elements } = form;
-    const {
-      width: { value: width },
-      height: { value: height },
-      addressName: { value: addressName },
-    } = elements;
-    const formData = {
-      addressName,
-      height,
-      width,
-    };
-    dispatch(handelLandAssignForm(formData));
   }
+  setValidated(true);
+  event.preventDefault();
+  const { elements } = form;
+  const {
+    width: { value: width },
+    height: { value: height },
+    addressName: { value: addressName },
+  } = elements;
+  const formData = {
+    addressName,
+    height,
+    width,
+    username,
+  };
+  dispatch(assignLandToFarmer(formData));
 };
 export const handelFormAccountCreation = (event, dispatch, setValidated) => {
   const form = event.currentTarget;

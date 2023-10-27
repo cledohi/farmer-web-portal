@@ -3,7 +3,10 @@ import {
   requestAuthoService,
   validateResponse,
 } from "../actions/AuthenticationService";
-import { createFarmerAccount } from "../actions/RegisterFarmerActionService";
+import {
+  assignLandToFarmer,
+  createFarmerAccount,
+} from "../actions/RegisterFarmerActionService";
 const userInitalState = {
   users: [],
   loading: false,
@@ -56,7 +59,6 @@ export const userDetails = createSlice({
       state.loading = false;
       validateResponse(state, action);
     },
-
     [assignLandToFarmer.rejected]: (state, action) => {
       state.loading = false;
       state.error = true;

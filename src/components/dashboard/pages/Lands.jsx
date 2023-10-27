@@ -3,9 +3,9 @@ import BreadCrum from "./components/breadcrum";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Loading from "../../common/Loading";
 import MessageError from "../../common/Message";
+import { handelLandAssignForm } from "../../../redux/actions/RegisterFarmerActionService";
 
 function Lands(props) {
   const {
@@ -24,8 +24,7 @@ function Lands(props) {
   const dispatch = useDispatch();
   const [validated, setValidated] = useState(false);
   const handleSubmit = (event) => {
-    console.log(event);
-    // handelFormAccountCreation(event, dispatch, setValidated);
+    handelLandAssignForm(event, setValidated, dispatch, username);
   };
   return (
     <div className="container-fluid  main-cal">
@@ -55,7 +54,7 @@ function Lands(props) {
               <Form.Label className="login-label">Land Width</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="number"
                 placeholder="Enter Land width"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -68,7 +67,7 @@ function Lands(props) {
               <Form.Label className="login-label">Land Height</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="number"
                 placeholder="Enter Land Height"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
