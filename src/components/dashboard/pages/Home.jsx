@@ -8,12 +8,7 @@ import DataTableCustom from "./components/dataTable";
 import { orderColumns } from "../../../utils/utils";
 function HomeDashboard(props) {
   const {
-    dataTable: {
-      filteredData,
-
-      size,
-      page,
-    },
+    dataTable: { filteredData, size, page },
   } = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const fetchOrders = () => {
@@ -21,7 +16,7 @@ function HomeDashboard(props) {
   };
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [fetchOrders]);
 
   return (
     <div className="main-cal container-fluid">
