@@ -13,7 +13,7 @@ import Seeds from "../dashboard/pages/Seeds";
 import Fertilizer from "../dashboard/pages/Fertilizer";
 import { useSelector } from "react-redux";
 import Lands from "../dashboard/pages/Lands";
-
+// 0788637333
 const FarmerRoutes = () => {
   const userState = useSelector((state) => state.app.user);
   const usertype = userState?.loginUser?.data?.user?.userType;
