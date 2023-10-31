@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/farmer-web-portal/static/css/main.738f64b4.css",
-    "main.js": "/farmer-web-portal/static/js/main.d6fb0103.js",
+    "main.js": "/farmer-web-portal/static/js/main.ff15c694.js",
     "static/media/404.png": "/farmer-web-portal/static/media/404.999faa134e6dd1bb2bf6.png",
     "index.html": "/farmer-web-portal/index.html",
     "main.738f64b4.css.map": "/farmer-web-portal/static/css/main.738f64b4.css.map",
-    "main.d6fb0103.js.map": "/farmer-web-portal/static/js/main.d6fb0103.js.map"
+    "main.ff15c694.js.map": "/farmer-web-portal/static/js/main.ff15c694.js.map"
   },
   "entrypoints": [
     "static/css/main.738f64b4.css",
-    "static/js/main.d6fb0103.js"
+    "static/js/main.ff15c694.js"
   ]
 }
