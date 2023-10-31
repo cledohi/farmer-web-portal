@@ -1,1 +1,1 @@
-export const baseUrl = "http://localhost:8183";
+export const baseUrl = "https://bkservice.onrender.com";
