@@ -24,7 +24,7 @@ const FarmerRoutes = () => {
       element: <Home />,
       children: [
         { index: true, element: <Login /> },
-        { path: "/login", element: <Login /> },
+        { path: "/farmer-web-portal", element: <Login /> },
         { path: "/register", element: <RegisterUser /> },
       ],
     },
